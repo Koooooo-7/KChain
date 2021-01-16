@@ -1,0 +1,18 @@
+language: java
+sudo: false
+
+jdk:
+  - openjdk8
+
+before_install:
+  - pip install --user codecov
+after_success:
+  - codecov
+
+notifications:
+  email:
+    recipients:
+      - koy@ko8e24.top
+    on_success: always # default: change
+    on_failure: always # default: always
+
