@@ -39,8 +39,14 @@ public class PropertiesCheckChainTest {
         when(map.get("name")).thenReturn("");
         when(map.get("age")).thenReturn(24);
         MapRuleContext ruleContext = new MapRuleContext(RuleStrategy.FULL_CHECK);
-        mapPropertiesCheckChain.test(ctx, new MapDataWrapper(map, ruleContext));
+
+        MapDataWrapper mapDataWrapper = new MapDataWrapper(map, ruleContext);
+        Assert.assertNull(mapDataWrapper.get(""));
+        Assert.assertNull(mapDataWrapper.getString(""));
+        Assert.assertNull(mapDataWrapper.getLong(""));
+        mapPropertiesCheckChain.test(ctx, mapDataWrapper);
         Map<String, String> result = ruleContext.getResult();
         Assert.assertEquals(Rule.NOT_EMPTY.name(), result.get("name"));
+
     }
 }
