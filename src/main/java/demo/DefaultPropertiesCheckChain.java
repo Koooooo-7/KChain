@@ -5,6 +5,7 @@ import core.DataWrapper;
 import core.IChain;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -20,4 +21,8 @@ public class DefaultPropertiesCheckChain implements IChain<DataWrapper<Object, O
     }
 
 
+    @Override
+    public Function<List<DataWrapper<Object, Object>>, List<DataWrapper<Object, Object>>> getFunction(ChainContext ctx) {
+        return dataWrappers -> dataWrappers;
+    }
 }

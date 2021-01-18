@@ -1,11 +1,12 @@
 package service.map;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
 import core.DataWrapper;
 import core.RuleContext;
 import rule.Rule;
 import rule.RuleStrategy;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -13,21 +14,21 @@ import java.util.Map;
  * @Description
  */
 
-public class MapRuleContext extends RuleContext<Map<String, Object>, Map<String, String>> {
+public class MapRuleContext extends RuleContext<Map<String, Object>, ListMultimap<String, String>> {
 
-    private HashMap<String, String> result = new HashMap<>();
+    private ListMultimap<String, String> result = ArrayListMultimap.create();
 
     public MapRuleContext(RuleStrategy strategy) {
         super(strategy);
     }
 
     @Override
-    protected void storeResult(String property, Rule rule, DataWrapper<Map<String, Object>, Map<String, String>> dataWrapper) {
+    protected void storeResult(String property, Rule rule, DataWrapper<Map<String, Object>, ListMultimap<String, String>> dataWrapper) {
         result.put(property, rule.name());
     }
 
     @Override
-    public Map<String, String> getResult() {
+    public ListMultimap<String, String> getResult() {
         return this.result;
     }
 

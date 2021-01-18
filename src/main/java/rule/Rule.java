@@ -6,6 +6,7 @@ public enum Rule {
     NOT_EMPTY,
     IN_CASE,
     HAS_ONE,
+    DUPLICATED,
     ;
 
 
