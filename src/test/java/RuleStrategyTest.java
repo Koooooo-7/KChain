@@ -1,3 +1,4 @@
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import rule.RuleStrategy;
@@ -15,5 +16,7 @@ public class RuleStrategyTest {
 
         boolean fastFailedPassFlagOnStrategy = RuleStrategy.FAST_FAILED.getPassFlagOnStrategy(false);
         Assert.assertFalse(fastFailedPassFlagOnStrategy);
+
+        Assert.assertTrue(StringUtils.isNotEmpty(RuleStrategy.FULL_CHECK.toString()));
     }
 }
