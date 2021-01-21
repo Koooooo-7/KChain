@@ -1,6 +1,7 @@
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import core.ChainContext;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,6 +50,7 @@ public class PropertiesCheckChainTest {
         mapPropertiesCheckChain.test(ctx, mapDataWrapper);
         ListMultimap<String, String> result = ruleContext.getResult();
         Assert.assertTrue(result.get("name").contains(Rule.NOT_EMPTY.name()));
+        Assert.assertTrue(StringUtils.isNotEmpty(ruleContext.toString()));
 
     }
 
