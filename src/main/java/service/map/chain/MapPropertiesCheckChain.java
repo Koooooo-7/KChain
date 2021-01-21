@@ -53,16 +53,18 @@ public class MapPropertiesCheckChain implements IChain<MapDataWrapper, List<MapD
 
     @Override
     public Function<List<MapDataWrapper>, List<MapDataWrapper>> getFunction(ChainContext ctx) {
-        return testDuplicatedInCollection(ctx, "name", dataWrapper -> dataWrapper.getString("name"), ruleContextSolverOnDuplicated)
-                .andThen(testDuplicatedInCollection(ctx, "age", dataWrapper -> dataWrapper.getString("age"), ruleContextSolverOnDuplicated));
+        return testDuplicatedInCollection(ctx, "name", dataWrapper -> true, dataWrapper -> dataWrapper.getString("name"), ruleContextSolverOnDuplicated)
+                .andThen(testDuplicatedInCollection(ctx, "age", dataWrapper -> true, dataWrapper -> dataWrapper.getString("age"), ruleContextSolverOnDuplicated));
     }
 
     private Function<List<MapDataWrapper>, List<MapDataWrapper>> testDuplicatedInCollection(ChainContext ctx, String property
+            , Predicate<? super MapDataWrapper> filter
             , Function<MapDataWrapper, String> mapping
             , TrdConsumer<ChainContext, String, List<MapDataWrapper>> ruleContextSolverOnDuplicated) {
         return mapDataWrappers -> {
             Map<Object, List<MapDataWrapper>> propertiesGroupByMap = mapDataWrappers
                     .parallelStream()
+                    .filter(filter)
                     .collect(Collectors
                             .groupingBy(mapping));
 
