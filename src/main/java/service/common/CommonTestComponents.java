@@ -1,6 +1,7 @@
 package service.common;
 
 import common.CheckResultCode;
+import common.CommonUtil;
 import core.ChainContext;
 import core.DataWrapper;
 import rule.TrdConsumer;
@@ -39,7 +40,7 @@ public class CommonTestComponents {
 
             propertiesGroupByMap.forEach((key, val) -> {
                 // has duplicated val in those properties
-                if (Objects.nonNull(key) && val.size() > 1) {
+                if (CommonUtil.isNotEmpty(key) && val.size() > 1) {
                     ruleContextSolverOnDuplicated.accept(ctx, property, val);
                 }
             });
