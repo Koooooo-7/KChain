@@ -3,6 +3,9 @@ package core;
 /**
  * @author Koy  https://github.com/Koooooo-7
  * @Description
+ *
+ * @param <T> the Type for data.
+ * @param <R> the Type for Result in RuleContext.
  */
 
 public class DataWrapper<T, R> {

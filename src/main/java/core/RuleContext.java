@@ -10,8 +10,10 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author Koy  https://github.com/Koooooo-7
  * @Description
+ *
+ * @param <T> the Type for DataWrapper data type.
+ * @param <R> the Type for return Result.
  */
-
 public abstract class RuleContext<T, R> {
 
     private AtomicBoolean pass = new AtomicBoolean(true);

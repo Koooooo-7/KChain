@@ -6,8 +6,10 @@ import java.util.function.Predicate;
 /**
  * @author Koy  https://github.com/Koooooo-7
  * @Description
+ *
+ * @param <T> the Type for Predicate
+ * @param <G> the Type for Function
  */
-
 public interface IChain<T, G> {
 
     default Function<G, G> getFunction(ChainContext ctx) {
