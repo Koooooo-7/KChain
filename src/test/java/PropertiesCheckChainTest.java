@@ -1,5 +1,6 @@
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
+import common.CheckResultCode;
 import core.ChainContext;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -79,9 +80,9 @@ public class PropertiesCheckChainTest {
         mapPropertiesCheckChain.test(ctx, mapDataWrapper);
         mapPropertiesCheckChain.apply(ctx, dataWrappers);
 
-        Assert.assertTrue(mapDataWrapper.getRuleContext().getResult().get("name").contains(Rule.NOT_EMPTY.name()));
-        Assert.assertTrue(mapDataWrapper.getRuleContext().getResult().get("age").contains(Rule.DUPLICATED.name()));
-        Assert.assertFalse(mapDataWrapper2.getRuleContext().getResult().get("name").contains(Rule.NOT_EMPTY.name()));
-        Assert.assertTrue(mapDataWrapper2.getRuleContext().getResult().get("age").contains(Rule.DUPLICATED.name()));
+        Assert.assertTrue(mapDataWrapper.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.name()));
+        Assert.assertTrue(mapDataWrapper.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.name()));
+        Assert.assertFalse(mapDataWrapper2.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.name()));
+        Assert.assertTrue(mapDataWrapper2.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.name()));
     }
 }

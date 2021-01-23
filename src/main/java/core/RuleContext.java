@@ -1,6 +1,6 @@
 package core;
 
-import rule.Rule;
+import common.CheckResultCode;
 import rule.RuleStrategy;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -22,11 +22,11 @@ public abstract class RuleContext<T, R> {
         this.strategy = strategy;
     }
 
-    public void setCheckResult(String property, Rule rule, DataWrapper<T, R> dataWrapper) {
+    public void setCheckResult(String property, CheckResultCode code, DataWrapper<T, R> dataWrapper) {
         this.pass.set(false);
         lock.lock();
         try {
-            storeResult(property, rule, dataWrapper);
+            storeResult(property, code, dataWrapper);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -43,7 +43,7 @@ public abstract class RuleContext<T, R> {
                 '}';
     }
 
-    protected abstract void storeResult(String property, Rule rule, DataWrapper<T, R> dataWrapper);
+    protected abstract void storeResult(String property, CheckResultCode code, DataWrapper<T, R> dataWrapper);
 
     public Boolean getPassFlag() {
         return this.strategy.getPassFlagOnStrategy(this.pass.get());

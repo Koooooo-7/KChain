@@ -2,9 +2,9 @@ package service.map;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
+import common.CheckResultCode;
 import core.DataWrapper;
 import core.RuleContext;
-import rule.Rule;
 import rule.RuleStrategy;
 
 import java.util.Map;
@@ -23,8 +23,8 @@ public class MapRuleContext extends RuleContext<Map<String, Object>, ListMultima
     }
 
     @Override
-    protected void storeResult(String property, Rule rule, DataWrapper<Map<String, Object>, ListMultimap<String, String>> dataWrapper) {
-        result.put(property, rule.name());
+    protected void storeResult(String property, CheckResultCode code, DataWrapper<Map<String, Object>, ListMultimap<String, String>> dataWrapper) {
+        result.put(property, code.name());
     }
 
     @Override
