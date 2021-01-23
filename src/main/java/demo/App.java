@@ -11,10 +11,8 @@ import service.map.MapDataWrapper;
 import service.map.MapRuleContext;
 import service.map.chain.MapPropertiesCheckChain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Koy  https://github.com/Koooooo-7
