@@ -5,6 +5,7 @@ import core.DataWrapper;
 import core.RuleContext;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Koy  https://github.com/Koooooo-7
@@ -22,6 +23,7 @@ public class MapDataWrapper extends DataWrapper<Map<String, Object>, ListMultima
         if (val instanceof String) {
             return (String) val;
         }
-        return "";
+
+        return Objects.isNull(val) ? "" : val + "";
     }
 }
