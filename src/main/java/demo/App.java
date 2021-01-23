@@ -39,19 +39,22 @@ public class App {
         HashMap<String, Object> map2 = new HashMap<>();
         map2.put("name", "Kobe");
         map2.put("age", 24);
-        ChainContext ctx = new ChainContext(RuleStrategy.FULL_CHECK);
 
+        // TODO: wrap the build steps in Builder.
+        MapPropertiesCheckChain mapPropertiesCheckChain = new MapPropertiesCheckChain();
+        ChainContext ctx = new ChainContext(RuleStrategy.FULL_CHECK);
         MapRuleContext ruleContext = new MapRuleContext(ctx.getRuleStrategy());
-        MapRuleContext ruleContext2 = new MapRuleContext(ctx.getRuleStrategy());
         MapDataWrapper mapDataWrapper = new MapDataWrapper(map, ruleContext);
+
+        mapPropertiesCheckChain.test(ctx, mapDataWrapper);
+        MapRuleContext ruleContext2 = new MapRuleContext(ctx.getRuleStrategy());
         MapDataWrapper mapDataWrapper2 = new MapDataWrapper(map2, ruleContext2);
         List<MapDataWrapper> dataWrappers = Lists.newArrayListWithCapacity(2);
         dataWrappers.add(mapDataWrapper);
-        dataWrappers.add(mapDataWrapper2);
 
-        MapPropertiesCheckChain mapPropertiesCheckChain = new MapPropertiesCheckChain();
-        mapPropertiesCheckChain.test(ctx, mapDataWrapper);
+        dataWrappers.add(mapDataWrapper2);
         mapPropertiesCheckChain.apply(ctx, dataWrappers);
+
         System.out.println(mapDataWrapper.getRuleContext().getResult());
         System.out.println(mapDataWrapper2.getRuleContext().getResult());
     }
