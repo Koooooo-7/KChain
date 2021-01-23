@@ -8,6 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 import rule.Rule;
 import rule.RuleStrategy;
+import service.entity.EntityDataWrapper;
+import service.entity.EntityRuleContext;
+import service.entity.User;
+import service.entity.chain.EntityPropertiesCheckChain;
 import service.map.MapDataWrapper;
 import service.map.MapRuleContext;
 import service.map.chain.MapPropertiesCheckChain;
@@ -27,11 +31,13 @@ import static org.mockito.Mockito.when;
 public class PropertiesCheckChainTest {
 
     private MapPropertiesCheckChain mapPropertiesCheckChain;
+    private EntityPropertiesCheckChain entityPropertiesCheckChain;
     private ChainContext ctx;
 
     @Before
     public void init() {
         mapPropertiesCheckChain = new MapPropertiesCheckChain();
+        entityPropertiesCheckChain = new EntityPropertiesCheckChain();
         ctx = new ChainContext(RuleStrategy.FULL_CHECK);
     }
 
@@ -65,7 +71,6 @@ public class PropertiesCheckChainTest {
         map2.put("name", "Kobe");
         map2.put("age", 24);
 
-        ChainContext ctx = new ChainContext(RuleStrategy.FULL_CHECK);
         MapRuleContext ruleContext = new MapRuleContext(ctx.getRuleStrategy());
         MapRuleContext ruleContext2 = new MapRuleContext(ctx.getRuleStrategy());
 
@@ -84,5 +89,23 @@ public class PropertiesCheckChainTest {
         Assert.assertTrue(mapDataWrapper.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.name()));
         Assert.assertFalse(mapDataWrapper2.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.name()));
         Assert.assertTrue(mapDataWrapper2.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.name()));
+    }
+
+    @Test
+    public void testEntityChainOnPredicated() {
+        User user = new User("", 24);
+
+        EntityRuleContext ruleContext = new EntityRuleContext(ctx.getRuleStrategy());
+        EntityDataWrapper entityDataWrapper = new EntityDataWrapper(user, ruleContext);
+
+        Assert.assertNull(entityDataWrapper.get(""));
+        Assert.assertNull(entityDataWrapper.getString(""));
+        Assert.assertNull(entityDataWrapper.getLong(""));
+
+        entityPropertiesCheckChain.test(ctx, entityDataWrapper);
+
+        ListMultimap<String, String> result = ruleContext.getResult();
+        Assert.assertTrue(result.get("name").contains(Rule.NOT_EMPTY.name()));
+        Assert.assertTrue(StringUtils.isNotEmpty(ruleContext.toString()));
     }
 }
