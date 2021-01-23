@@ -6,13 +6,34 @@ public enum Rule {
     NOT_EMPTY,
     IN_CASE,
     HAS_ONE,
+    CUSTOMIZED,
     ;
 
 
+    /**
+     * Test if empty
+     *
+     * @param property        the property of element
+     * @param testEmptyRule   how to check if its value is empty
+     * @param resultProcessor how to deal with the test result
+     * @param <T>             the test object
+     * @return predicate
+     */
     public static <T> Predicate<T> testNotEmpty(String property
             , Predicate<T> testEmptyRule
             , TrdFunction<String, T, Boolean, Boolean> resultProcessor) {
         return test(property, (t) -> true, (s, t, predicatedResult) -> true, testEmptyRule, resultProcessor);
+    }
+
+    /**
+     * Customer test
+     *
+     * @param func the predicated function
+     * @param <T>  the test object
+     * @return predicate
+     */
+    public static <T> Predicate<T> testOnCustomized(Predicate<T> func) {
+        return func;
     }
 
     /**
