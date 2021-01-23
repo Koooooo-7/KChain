@@ -20,6 +20,19 @@ import java.util.Map;
 public class App {
 
     public static void main(String[] args) {
+        demoOnMap();
+    }
+
+
+    /**
+     * Demo
+     * map1 [name="", age=24]
+     * map2 [name="Kobe", age=24]
+     * <p>
+     * test map1 that the name is empty
+     * test map1 and map2 that the age is duplicated
+     */
+    public static void demoOnMap() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("name", "");
         map.put("age", 24);
