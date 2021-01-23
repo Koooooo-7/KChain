@@ -1,0 +1,57 @@
+package service.common;
+
+import common.CheckResultCode;
+import core.ChainContext;
+import core.DataWrapper;
+import rule.TrdConsumer;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+/**
+ * @author Koy  https://github.com/Koooooo-7
+ * @Description
+ */
+
+public class CommonTestComponents {
+
+
+    public static <T extends DataWrapper> Function<List<T>, List<T>> testDuplicatedInCollection(ChainContext ctx, String property
+            , Predicate<T> filter
+            , Function<T, String> mapping) {
+        return testDuplicatedInCollection(ctx, property, filter, mapping, ruleContextSolverOnDuplicated());
+    }
+
+    public static <T extends DataWrapper> Function<List<T>, List<T>> testDuplicatedInCollection(ChainContext ctx, String property
+            , Predicate<T> filter
+            , Function<T, String> mapping
+            , TrdConsumer<ChainContext, String, List<T>> ruleContextSolverOnDuplicated) {
+        return dataWrappers -> {
+            Map<Object, List<T>> propertiesGroupByMap = dataWrappers
+                    .parallelStream()
+                    .filter(filter)
+                    .collect(Collectors
+                            .groupingBy(mapping));
+
+            propertiesGroupByMap.forEach((key, val) -> {
+                // has duplicated val in those properties
+                if (Objects.nonNull(key) && val.size() > 1) {
+                    ruleContextSolverOnDuplicated.accept(ctx, property, val);
+                }
+            });
+            return dataWrappers;
+        };
+    }
+
+    private static <T extends DataWrapper> TrdConsumer<ChainContext, String, List<T>> ruleContextSolverOnDuplicated() {
+        return (ctx, property, values) -> {
+            values.parallelStream().forEach(it -> {
+                it.getRuleContext().setCheckResult(property, CheckResultCode.DUPLICATED, it);
+            });
+        };
+    }
+}

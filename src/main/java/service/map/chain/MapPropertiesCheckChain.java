@@ -5,16 +5,15 @@ import common.CommonUtil;
 import core.ChainContext;
 import core.IChain;
 import rule.Rule;
-import rule.TrdConsumer;
 import rule.TrdFunction;
+import service.common.CommonTestComponents;
 import service.map.MapDataWrapper;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
+
+import static service.common.CommonTestComponents.testDuplicatedInCollection;
 
 /**
  * @author Koy  https://github.com/Koooooo-7
@@ -70,35 +69,8 @@ public class MapPropertiesCheckChain implements IChain<MapDataWrapper, List<MapD
      */
     @Override
     public Function<List<MapDataWrapper>, List<MapDataWrapper>> getFunction(ChainContext ctx) {
-        return testDuplicatedInCollection(ctx, "name", dataWrapper -> true, dataWrapper -> dataWrapper.getString("name"), ruleContextSolverOnDuplicated)
-                .andThen(testDuplicatedInCollection(ctx, "age", dataWrapper -> true, dataWrapper -> dataWrapper.getString("age"), ruleContextSolverOnDuplicated));
+        return CommonTestComponents.<MapDataWrapper>testDuplicatedInCollection(ctx, "name", dataWrapper -> true, dataWrapper -> dataWrapper.getString("name"))
+                .andThen(testDuplicatedInCollection(ctx, "age", dataWrapper -> true, dataWrapper -> dataWrapper.getString("age")));
     }
-
-    private Function<List<MapDataWrapper>, List<MapDataWrapper>> testDuplicatedInCollection(ChainContext ctx, String property
-            , Predicate<? super MapDataWrapper> filter
-            , Function<MapDataWrapper, String> mapping
-            , TrdConsumer<ChainContext, String, List<MapDataWrapper>> ruleContextSolverOnDuplicated) {
-        return mapDataWrappers -> {
-            Map<Object, List<MapDataWrapper>> propertiesGroupByMap = mapDataWrappers
-                    .parallelStream()
-                    .filter(filter)
-                    .collect(Collectors
-                            .groupingBy(mapping));
-
-            propertiesGroupByMap.forEach((key, val) -> {
-                // has duplicated val in those properties
-                if (Objects.nonNull(key) && val.size() > 1) {
-                    ruleContextSolverOnDuplicated.accept(ctx, property, val);
-                }
-            });
-            return mapDataWrappers;
-        };
-    }
-
-    TrdConsumer<ChainContext, String, List<MapDataWrapper>> ruleContextSolverOnDuplicated = (ctx, property, values) -> {
-        values.parallelStream().forEach(it -> {
-            it.getRuleContext().setCheckResult(property, CheckResultCode.DUPLICATED, it);
-        });
-    };
 
 }
