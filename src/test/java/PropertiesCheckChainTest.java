@@ -30,16 +30,9 @@ import static org.mockito.Mockito.when;
 
 public class PropertiesCheckChainTest {
 
-    private static MapPropertiesCheckChain mapPropertiesCheckChain;
-    private static EntityPropertiesCheckChain entityPropertiesCheckChain;
-    private static ChainContext ctx;
-
-    @BeforeAll
-    public static void init() {
-        mapPropertiesCheckChain = new MapPropertiesCheckChain();
-        entityPropertiesCheckChain = new EntityPropertiesCheckChain();
-        ctx = new ChainContext(RuleStrategy.FULL_CHECK);
-    }
+    private MapPropertiesCheckChain mapPropertiesCheckChain = new MapPropertiesCheckChain();
+    private EntityPropertiesCheckChain entityPropertiesCheckChain = new EntityPropertiesCheckChain();
+    private ChainContext ctx = new ChainContext(RuleStrategy.FULL_CHECK);
 
     @Test
     public void testMapChainOnPredicated() {
