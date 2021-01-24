@@ -1,5 +1,4 @@
 import demo.App;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -10,8 +9,7 @@ import org.junit.jupiter.api.Test;
 public class DemoTest {
 
     @Test
-    @DisplayName("Call main on Demo App.class")
-    public void runMain(){
+    public void testDemoApp(){
         App.main(new String[]{});
     }
 }
