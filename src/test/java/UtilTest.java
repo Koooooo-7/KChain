@@ -38,4 +38,10 @@ public class UtilTest {
         boolean notEmpty7 = CommonUtil.isNotEmpty(mock(User.class), User.class);
         Assert.assertTrue(notEmpty7);
     }
+
+    @Test
+    public void testIsEmpty() {
+        boolean empty = CommonUtil.isEmpty("", String.class);
+        Assert.assertTrue(empty);
+    }
 }
