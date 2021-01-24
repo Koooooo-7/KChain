@@ -55,7 +55,10 @@ public enum Rule {
      */
     private <T> Predicate<T> test(String property
             , Predicate<T> testOnPredicate, TrdFunction<String, T, Boolean, Boolean> failedPredicatedProcessor
-            , Predicate<T> testRule, TrdFunction<String, T, Boolean, Boolean> resultProcessor) {
+            , Predicate<T> testRule, TrdFunction<String/*property*/
+            , T/*input DataWrapper*/
+            , Boolean/*result*/
+            , Boolean/*flag*/> resultProcessor) {
         return t -> {
             if (!testOnPredicate.test(t)) {
                 return failedPredicatedProcessor.apply(property, t, Boolean.FALSE);
