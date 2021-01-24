@@ -28,7 +28,7 @@ public class App {
 
 
     /**
-     * Demo
+     * Demo on map
      * map1 [name="", age=24]
      * map2 [name="Kobe", age=24]
      * <p>
@@ -63,6 +63,14 @@ public class App {
         System.out.println(mapDataWrapper2.getRuleContext().getResult());
     }
 
+    /**
+     * Demo on entity
+     * user1 [name="", age=24]
+     * user1 [name="Kobe", age=24]
+     * <p>
+     * test user1 that the name is empty
+     * test user1 and user2 that the age is duplicated
+     */
     public static void demoOnEntity() {
         User user = new User("", 24);
         User user2 = new User("Kobe", 24);

@@ -1,5 +1,5 @@
 import core.ChainContext;
-import demo.DefaultPropertiesCheckChain;
+import core.DefaultPropertiesCheckChain;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
