@@ -1,6 +1,6 @@
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import rule.RuleStrategy;
 
 /**
@@ -12,11 +12,11 @@ public class RuleStrategyTest {
     @Test
     public void testRuleStrategy(){
         boolean fullCheckPassFlagOnStrategy = RuleStrategy.FULL_CHECK.getPassFlagOnStrategy(false);
-        Assert.assertTrue(fullCheckPassFlagOnStrategy);
+        Assertions.assertTrue(fullCheckPassFlagOnStrategy);
 
         boolean fastFailedPassFlagOnStrategy = RuleStrategy.FAST_FAILED.getPassFlagOnStrategy(false);
-        Assert.assertFalse(fastFailedPassFlagOnStrategy);
+        Assertions.assertFalse(fastFailedPassFlagOnStrategy);
 
-        Assert.assertTrue(StringUtils.isNotEmpty(RuleStrategy.FULL_CHECK.toString()));
+        Assertions.assertTrue(StringUtils.isNotEmpty(RuleStrategy.FULL_CHECK.toString()));
     }
 }

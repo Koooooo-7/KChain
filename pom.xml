@@ -10,14 +10,14 @@
     <description>A flexible and configurable chain.</description>
     <properties>
         <mockito.version>1.10.19</mockito.version>
-        <junit.version>4.13.1</junit.version>
+        <junit.version>5.7.0</junit.version>
         <guava.version>30.0-jre</guava.version>
         <commons-lang.version>3.11</commons-lang.version>
     </properties>
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>

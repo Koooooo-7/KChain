@@ -1,5 +1,5 @@
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import rule.Rule;
 
 /**
@@ -10,8 +10,8 @@ import rule.Rule;
 public class RuleTest {
 
     @Test
-    public void testAssertOnErrorTypeReference() {
-        Assert.assertThrows(AssertionError.class,
+    public void testAssertionsOnErrorTypeReference() {
+        Assertions.assertThrows(AssertionError.class,
                 () -> Rule.NOT_EMPTY.testOnCustomized("1"::equals).test("1"));
 
     }
@@ -19,6 +19,6 @@ public class RuleTest {
     @Test
     public void testCustomerRule() {
         boolean result = Rule.CUSTOMIZED.testOnCustomized("1"::equals).test("1");
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 }

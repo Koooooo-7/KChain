@@ -1,8 +1,8 @@
 import core.ChainContext;
 import core.DefaultPropertiesCheckChain;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import rule.RuleStrategy;
 import rule.TrdConsumer;
 import rule.TrdFunction;
@@ -44,7 +44,7 @@ public class ChainTest {
         TrdFunction<String, String, String, String> function1 = (s1, s2, s3) -> s1;
         Function<String, String> function2 = s1 -> s1;
         String result = function1.andThen(function2).apply("1", "2", "3");
-        Assert.assertTrue(StringUtils.equals("1", result));
+        Assertions.assertTrue(StringUtils.equals("1", result));
 
     }
 }

@@ -3,9 +3,9 @@ import com.google.common.collect.Lists;
 import common.CheckResultCode;
 import core.ChainContext;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import rule.Rule;
 import rule.RuleStrategy;
 import service.entity.EntityDataWrapper;
@@ -30,12 +30,12 @@ import static org.mockito.Mockito.when;
 
 public class PropertiesCheckChainTest {
 
-    private MapPropertiesCheckChain mapPropertiesCheckChain;
-    private EntityPropertiesCheckChain entityPropertiesCheckChain;
-    private ChainContext ctx;
+    private static MapPropertiesCheckChain mapPropertiesCheckChain;
+    private static EntityPropertiesCheckChain entityPropertiesCheckChain;
+    private static ChainContext ctx;
 
-    @Before
-    public void init() {
+    @BeforeAll
+    public static void init() {
         mapPropertiesCheckChain = new MapPropertiesCheckChain();
         entityPropertiesCheckChain = new EntityPropertiesCheckChain();
         ctx = new ChainContext(RuleStrategy.FULL_CHECK);
@@ -50,14 +50,14 @@ public class PropertiesCheckChainTest {
         MapRuleContext ruleContext = new MapRuleContext(ctx.getRuleStrategy());
         MapDataWrapper mapDataWrapper = new MapDataWrapper(map, ruleContext);
 
-        Assert.assertNull(mapDataWrapper.get(""));
-        Assert.assertEquals("", mapDataWrapper.getString(""));
-        Assert.assertNull(mapDataWrapper.getLong(""));
+        Assertions.assertNull(mapDataWrapper.get(""));
+        Assertions.assertEquals("", mapDataWrapper.getString(""));
+        Assertions.assertNull(mapDataWrapper.getLong(""));
 
         mapPropertiesCheckChain.test(ctx, mapDataWrapper);
         ListMultimap<String, String> result = ruleContext.getResult();
-        Assert.assertTrue(result.get("name").contains(Rule.NOT_EMPTY.name()));
-        Assert.assertTrue(StringUtils.isNotEmpty(ruleContext.toString()));
+        Assertions.assertTrue(result.get("name").contains(Rule.NOT_EMPTY.name()));
+        Assertions.assertTrue(StringUtils.isNotEmpty(ruleContext.toString()));
 
     }
 
@@ -85,10 +85,10 @@ public class PropertiesCheckChainTest {
         mapPropertiesCheckChain.test(ctx, mapDataWrapper);
         mapPropertiesCheckChain.apply(ctx, dataWrappers);
 
-        Assert.assertTrue(mapDataWrapper.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.name()));
-        Assert.assertTrue(mapDataWrapper.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.name()));
-        Assert.assertFalse(mapDataWrapper2.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.name()));
-        Assert.assertTrue(mapDataWrapper2.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.name()));
+        Assertions.assertTrue(mapDataWrapper.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.name()));
+        Assertions.assertTrue(mapDataWrapper.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.name()));
+        Assertions.assertFalse(mapDataWrapper2.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.name()));
+        Assertions.assertTrue(mapDataWrapper2.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.name()));
     }
 
     @Test
@@ -98,14 +98,14 @@ public class PropertiesCheckChainTest {
         EntityRuleContext ruleContext = new EntityRuleContext(ctx.getRuleStrategy());
         EntityDataWrapper entityDataWrapper = new EntityDataWrapper(user, ruleContext);
 
-        Assert.assertNull(entityDataWrapper.get(""));
-        Assert.assertNull(entityDataWrapper.getString(""));
-        Assert.assertNull(entityDataWrapper.getLong(""));
+        Assertions.assertNull(entityDataWrapper.get(""));
+        Assertions.assertNull(entityDataWrapper.getString(""));
+        Assertions.assertNull(entityDataWrapper.getLong(""));
 
         entityPropertiesCheckChain.test(ctx, entityDataWrapper);
 
         ListMultimap<String, String> result = ruleContext.getResult();
-        Assert.assertTrue(result.get("name").contains(Rule.NOT_EMPTY.name()));
-        Assert.assertTrue(StringUtils.isNotEmpty(ruleContext.toString()));
+        Assertions.assertTrue(result.get("name").contains(Rule.NOT_EMPTY.name()));
+        Assertions.assertTrue(StringUtils.isNotEmpty(ruleContext.toString()));
     }
 }
