@@ -2,6 +2,11 @@ package rule;
 
 import java.util.function.*;
 
+/**
+ * @author Koy  https://github.com/Koooooo-7
+ * @Description
+ */
+
 public enum Rule {
     NOT_EMPTY,
     IN_CASE,
@@ -19,9 +24,10 @@ public enum Rule {
      * @param <T>             the test object
      * @return predicate
      */
-    public static <T> Predicate<T> testNotEmpty(String property
+    public <T> Predicate<T> testNotEmpty(String property
             , Predicate<T> testEmptyRule
             , TrdFunction<String, T, Boolean, Boolean> resultProcessor) {
+        assert NOT_EMPTY == this : "error type reference on Rule NOT_EMPTY";
         return test(property, (t) -> true, (s, t, predicatedResult) -> true, testEmptyRule, resultProcessor);
     }
 
@@ -32,7 +38,8 @@ public enum Rule {
      * @param <T>  the test object
      * @return predicate
      */
-    public static <T> Predicate<T> testOnCustomized(Predicate<T> func) {
+    public <T> Predicate<T> testOnCustomized(Predicate<T> func) {
+        assert CUSTOMIZED == this : "error type reference on Rule CUSTOMIZED";
         return func;
     }
 
@@ -46,7 +53,7 @@ public enum Rule {
      * @param <T>             input params
      * @return Predicated<T>
      */
-    public static <T> Predicate<T> test(String property
+    private <T> Predicate<T> test(String property
             , Predicate<T> testOnPredicate, TrdFunction<String, T, Boolean, Boolean> failedPredicatedProcessor
             , Predicate<T> testRule, TrdFunction<String, T, Boolean, Boolean> resultProcessor) {
         return t -> {

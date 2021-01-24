@@ -44,10 +44,10 @@ public class EntityPropertiesCheckChain implements IChain<EntityDataWrapper, Lis
      */
     @Override
     public Predicate<EntityDataWrapper> getPredicateChain(ChainContext ctx) {
-        return Rule.<EntityDataWrapper>testNotEmpty("name"
+        return Rule.NOT_EMPTY.<EntityDataWrapper>testNotEmpty("name"
                 , dataWrapper -> CommonUtil.isNotEmpty(dataWrapper.getData().getName())
                 , resultProcessor("name", CheckResultCode.NOT_EMPTY))
-                .and(Rule.testNotEmpty("age"
+                .and(Rule.NOT_EMPTY.testNotEmpty("age"
                         , dataWrapper -> CommonUtil.isNotEmpty(dataWrapper.getData().getAge())
                         , resultProcessor("age", CheckResultCode.NOT_EMPTY)
                 ));

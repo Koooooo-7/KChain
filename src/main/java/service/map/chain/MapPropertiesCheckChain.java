@@ -48,10 +48,10 @@ public class MapPropertiesCheckChain implements IChain<MapDataWrapper, List<MapD
      */
     @Override
     public Predicate<MapDataWrapper> getPredicateChain(ChainContext ctx) {
-        return Rule.testNotEmpty("name"
+        return Rule.NOT_EMPTY.<MapDataWrapper>testNotEmpty("name"
                 , testEmptyRule("name")
                 , resultProcessor("name", CheckResultCode.NOT_EMPTY))
-                .and(Rule.testNotEmpty("age"
+                .and(Rule.NOT_EMPTY.testNotEmpty("age"
                         , testEmptyRule("age")
                         , resultProcessor("age", CheckResultCode.NOT_EMPTY)
                 ));
