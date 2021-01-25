@@ -10,15 +10,23 @@
     <description>A flexible and configurable chain.</description>
     <properties>
         <mockito.version>1.10.19</mockito.version>
-        <junit.version>5.7.0</junit.version>
         <guava.version>30.0-jre</guava.version>
         <commons-lang.version>3.11</commons-lang.version>
+        <junit.jupiter.version>5.5.2</junit.jupiter.version>
+        <junit.platform.version>1.5.2</junit.platform.version>
     </properties>
     <dependencies>
+        <!-- maven https://howtodoinjava.com/junit5/junit5-maven-dependency/-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -50,6 +58,10 @@
                     <target>8</target>
                     <encoding>utf-8</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
