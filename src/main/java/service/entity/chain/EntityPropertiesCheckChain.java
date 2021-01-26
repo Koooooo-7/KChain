@@ -69,7 +69,9 @@ public class EntityPropertiesCheckChain implements IChain<EntityDataWrapper, Lis
      */
     @Override
     public Function<List<EntityDataWrapper>, List<EntityDataWrapper>> getFunction(ChainContext ctx) {
-        return CommonTestComponents.<EntityDataWrapper>testDuplicatedInCollection(ctx, "name", dataWrapper -> true, dataWrapper -> dataWrapper.getData().getName())
+        return CommonTestComponents.<EntityDataWrapper>testDuplicatedInCollection(ctx, "name"
+                , dataWrapper -> true
+                , dataWrapper -> dataWrapper.getData().getName())
                 .andThen(testDuplicatedInCollection(ctx, "age", dataWrapper -> true, dataWrapper -> {
                     Integer age = dataWrapper.getData().getAge();
                     if (CommonUtil.isEmpty(age)) {

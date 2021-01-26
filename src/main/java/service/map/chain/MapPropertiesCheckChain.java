@@ -10,7 +10,6 @@ import service.common.CommonTestComponents;
 import service.map.MapDataWrapper;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -77,8 +76,14 @@ public class MapPropertiesCheckChain implements IChain<MapDataWrapper, List<MapD
      */
     @Override
     public Function<List<MapDataWrapper>, List<MapDataWrapper>> getFunction(ChainContext ctx) {
-        return CommonTestComponents.<MapDataWrapper>testDuplicatedInCollection(ctx, "name", dataWrapper -> true, dataWrapper -> dataWrapper.getString("name"))
-                .andThen(testDuplicatedInCollection(ctx, "age", dataWrapper -> true, dataWrapper -> dataWrapper.getString("age")));
+        return CommonTestComponents.<MapDataWrapper>testDuplicatedInCollection(ctx
+                , "name"
+                , dataWrapper -> true
+                , dataWrapper -> dataWrapper.getString("name"))
+                .andThen(testDuplicatedInCollection(ctx
+                        , "age"
+                        , dataWrapper -> true
+                        , dataWrapper -> dataWrapper.getString("age")));
     }
 
 }
