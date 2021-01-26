@@ -38,6 +38,7 @@ public class App {
      * test map1 and map2 that the age is duplicated
      */
     public static void demoOnMap() {
+        // mock maps
         HashMap<String, Object> map = new HashMap<>();
         map.put("name", "");
         map.put("age", 24);
@@ -45,19 +46,19 @@ public class App {
         map2.put("name", "Kobe");
         map2.put("age", 24);
 
-        MapPropertiesCheckChain mapPropertiesCheckChain = new MapPropertiesCheckChain();
         ChainContext ctx = new ChainContext(RuleStrategy.FULL_CHECK);
+
+        // wrap date to dataWrapper
         MapRuleContext ruleContext = new MapRuleContext(ctx.getRuleStrategy());
         MapDataWrapper mapDataWrapper = new MapDataWrapper(map, ruleContext);
-
-        mapPropertiesCheckChain.test(ctx, mapDataWrapper);
-
         MapRuleContext ruleContext2 = new MapRuleContext(ctx.getRuleStrategy());
         MapDataWrapper mapDataWrapper2 = new MapDataWrapper(map2, ruleContext2);
         List<MapDataWrapper> dataWrappers = Lists.newArrayListWithCapacity(2);
         dataWrappers.add(mapDataWrapper);
-
         dataWrappers.add(mapDataWrapper2);
+
+        MapPropertiesCheckChain mapPropertiesCheckChain = new MapPropertiesCheckChain();
+        mapPropertiesCheckChain.test(ctx, mapDataWrapper);
         mapPropertiesCheckChain.apply(ctx, dataWrappers);
 
         System.out.println(mapDataWrapper.getRuleContext().getResult());
@@ -76,19 +77,20 @@ public class App {
         User user = new User("", 24);
         User user2 = new User("Kobe", 24);
 
-        EntityPropertiesCheckChain entityPropertiesCheckChain = new EntityPropertiesCheckChain();
+
         ChainContext ctx = new ChainContext(RuleStrategy.FULL_CHECK);
+
+        // wrap date to dataWrapper
         EntityRuleContext ruleContext = new EntityRuleContext(ctx.getRuleStrategy());
         EntityDataWrapper entityDataWrapper = new EntityDataWrapper(user, ruleContext);
-
-        entityPropertiesCheckChain.test(ctx, entityDataWrapper);
-
         EntityRuleContext ruleContext2 = new EntityRuleContext(ctx.getRuleStrategy());
         EntityDataWrapper entityDataWrapper2 = new EntityDataWrapper(user2, ruleContext2);
         List<EntityDataWrapper> dataWrappers = Lists.newArrayListWithCapacity(2);
         dataWrappers.add(entityDataWrapper);
-
         dataWrappers.add(entityDataWrapper2);
+
+        EntityPropertiesCheckChain entityPropertiesCheckChain = new EntityPropertiesCheckChain();
+        entityPropertiesCheckChain.test(ctx, entityDataWrapper);
         entityPropertiesCheckChain.apply(ctx, dataWrappers);
 
         System.out.println(entityDataWrapper.getRuleContext().getResult());
@@ -112,6 +114,7 @@ public class App {
         map2.put("name", "Kobe");
         map2.put("age", 24);
 
+        // wrap date to dataWrapper
         MapDataWrapper mapDataWrapper = new MapDataWrapper(map, new MapRuleContext(RuleStrategy.FULL_CHECK));
         MapDataWrapper mapDataWrapper2 = new MapDataWrapper(map2, new MapRuleContext(RuleStrategy.FULL_CHECK));
         List<MapDataWrapper> mapDataWrappers = Lists.newArrayListWithCapacity(2);
@@ -119,6 +122,7 @@ public class App {
         mapDataWrappers.add(mapDataWrapper2);
 
         MapPropertiesCheckChain mapPropertiesCheckChain = new MapPropertiesCheckChain();
+
         Chain<MapDataWrapper, List<MapDataWrapper>> chain = ChainBuilder.newBuilder()
                 .setChainContext(new ChainContext(RuleStrategy.FAST_FAILED))
                 .setChain(mapPropertiesCheckChain)
@@ -126,6 +130,7 @@ public class App {
 
         chain.test(mapDataWrapper);
         chain.apply(mapDataWrappers);
+
         System.out.println(mapDataWrapper.getRuleContext().getResult().toString());
         System.out.println(mapDataWrapper2.getRuleContext().getResult().toString());
     }
