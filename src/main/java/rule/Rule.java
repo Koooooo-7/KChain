@@ -9,7 +9,7 @@ import java.util.function.*;
 
 public enum Rule {
     NOT_EMPTY,
-    IN_CASE,
+    IN_CASES,
     HAS_ONE,
     CUSTOMIZED,
     ;
@@ -29,6 +29,13 @@ public enum Rule {
             , TrdFunction<String, T, Boolean, Boolean> resultProcessor) {
         assert NOT_EMPTY == this : "error type reference on Rule NOT_EMPTY";
         return test(property, (t) -> true, (s, t, predicatedResult) -> true, testEmptyRule, resultProcessor);
+    }
+
+    public <T> Predicate<T> testInCases(String property
+            , Predicate<T> testInCasesRule
+            , TrdFunction<String, T, Boolean, Boolean> resultProcessor) {
+        assert IN_CASES == this : "error type reference on Rule IN_CASES";
+        return test(property, (t) -> true, (s, t, predicatedResult) -> true, testInCasesRule, resultProcessor);
     }
 
     /**

@@ -6,6 +6,7 @@ import core.ChainContext;
 import core.DataWrapper;
 import rule.TrdConsumer;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -19,6 +20,10 @@ import java.util.stream.Collectors;
 
 public class CommonTestComponents {
 
+
+    public static <T, G> Predicate<T> testInCasesRule(Function<T, G> getValue, Collection<G> cases) {
+        return t -> cases.contains(getValue.apply(t));
+    }
 
     public static <T extends DataWrapper> Function<List<T>, List<T>> testDuplicatedInCollection(ChainContext ctx, String property
             , Predicate<T> filter

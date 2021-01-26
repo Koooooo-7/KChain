@@ -22,7 +22,7 @@ public class EntityRuleContext extends RuleContext<User, ListMultimap<String, St
 
     @Override
     protected void storeResult(String property, CheckResultCode code, DataWrapper<User, ListMultimap<String, String>> dataWrapper) {
-        result.put(property, code.name());
+        result.put(property, code.getReason());
     }
 
     @Override

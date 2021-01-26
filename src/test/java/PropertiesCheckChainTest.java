@@ -56,7 +56,7 @@ public class PropertiesCheckChainTest {
 
         mapPropertiesCheckChain.test(ctx, mapDataWrapper);
         ListMultimap<String, String> result = ruleContext.getResult();
-        Assertions.assertTrue(result.get("name").contains(Rule.NOT_EMPTY.name()));
+        Assertions.assertTrue(result.get("name").contains(CheckResultCode.NOT_EMPTY.getReason()));
         Assertions.assertTrue(StringUtils.isNotEmpty(ruleContext.toString()));
 
     }
@@ -85,10 +85,10 @@ public class PropertiesCheckChainTest {
         mapPropertiesCheckChain.test(ctx, mapDataWrapper);
         mapPropertiesCheckChain.apply(ctx, dataWrappers);
 
-        Assertions.assertTrue(mapDataWrapper.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.name()));
-        Assertions.assertTrue(mapDataWrapper.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.name()));
-        Assertions.assertFalse(mapDataWrapper2.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.name()));
-        Assertions.assertTrue(mapDataWrapper2.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.name()));
+        Assertions.assertTrue(mapDataWrapper.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.getReason()));
+        Assertions.assertTrue(mapDataWrapper.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.getReason()));
+        Assertions.assertFalse(mapDataWrapper2.getRuleContext().getResult().get("name").contains(CheckResultCode.NOT_EMPTY.getReason()));
+        Assertions.assertTrue(mapDataWrapper2.getRuleContext().getResult().get("age").contains(CheckResultCode.DUPLICATED.getReason()));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class PropertiesCheckChainTest {
         entityPropertiesCheckChain.test(ctx, entityDataWrapper);
 
         ListMultimap<String, String> result = ruleContext.getResult();
-        Assertions.assertTrue(result.get("name").contains(Rule.NOT_EMPTY.name()));
+        Assertions.assertTrue(result.get("name").contains(CheckResultCode.NOT_EMPTY.getReason()));
         Assertions.assertTrue(StringUtils.isNotEmpty(ruleContext.toString()));
     }
 }

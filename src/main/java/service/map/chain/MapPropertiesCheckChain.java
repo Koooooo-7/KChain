@@ -9,6 +9,8 @@ import rule.TrdFunction;
 import service.common.CommonTestComponents;
 import service.map.MapDataWrapper;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -25,6 +27,7 @@ public class MapPropertiesCheckChain implements IChain<MapDataWrapper, List<MapD
     private static Predicate<MapDataWrapper> testEmptyRule(String property) {
         return mapDataWrapper -> CommonUtil.isNotEmpty(mapDataWrapper.getData().get(property));
     }
+
 
     private static TrdFunction<String, MapDataWrapper, Boolean, Boolean> resultProcessor(String property, CheckResultCode code) {
         return (s, dw, ruleCheckResult) -> {
@@ -54,6 +57,11 @@ public class MapPropertiesCheckChain implements IChain<MapDataWrapper, List<MapD
                 .and(Rule.NOT_EMPTY.testNotEmpty("age"
                         , testEmptyRule("age")
                         , resultProcessor("age", CheckResultCode.NOT_EMPTY)
+                ))
+                .and(Rule.IN_CASES.testInCases("age",
+                        CommonTestComponents.testInCasesRule(dataWrapper -> Integer.valueOf(dataWrapper.getString("age"))
+                                , Arrays.asList(1, 2, 3, 4, 5))
+                        , resultProcessor("age", CheckResultCode.IN_CASES)
                 ));
 
     }

@@ -24,7 +24,7 @@ public class MapRuleContext extends RuleContext<Map<String, Object>, ListMultima
 
     @Override
     protected void storeResult(String property, CheckResultCode code, DataWrapper<Map<String, Object>, ListMultimap<String, String>> dataWrapper) {
-        result.put(property, code.name());
+        result.put(property, code.getReason());
     }
 
     @Override
