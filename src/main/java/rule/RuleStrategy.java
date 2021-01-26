@@ -7,7 +7,7 @@ package rule;
 
 public enum RuleStrategy {
     FULL_CHECK,
-    FAST_FAILED;
+    FAIL_FAST;
 
 
     public boolean getPassFlagOnStrategy(boolean pass) {
@@ -15,7 +15,7 @@ public enum RuleStrategy {
             case FULL_CHECK:
                 return true;
 
-            case FAST_FAILED:
+            case FAIL_FAST:
                 return pass;
 
             default:

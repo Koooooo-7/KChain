@@ -14,7 +14,7 @@ public class RuleStrategyTest {
         boolean fullCheckPassFlagOnStrategy = RuleStrategy.FULL_CHECK.getPassFlagOnStrategy(false);
         Assertions.assertTrue(fullCheckPassFlagOnStrategy);
 
-        boolean fastFailedPassFlagOnStrategy = RuleStrategy.FAST_FAILED.getPassFlagOnStrategy(false);
+        boolean fastFailedPassFlagOnStrategy = RuleStrategy.FAIL_FAST.getPassFlagOnStrategy(false);
         Assertions.assertFalse(fastFailedPassFlagOnStrategy);
 
         Assertions.assertTrue(StringUtils.isNotEmpty(RuleStrategy.FULL_CHECK.toString()));

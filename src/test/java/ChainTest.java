@@ -19,13 +19,13 @@ public class ChainTest {
     public void testDefaultPropertiesChain() {
         DefaultPropertiesCheckChain defaultPropertiesCheckChain = new DefaultPropertiesCheckChain();
         defaultPropertiesCheckChain.getPredicateChain(new ChainContext(RuleStrategy.FULL_CHECK));
-        defaultPropertiesCheckChain.getFunction(new ChainContext(RuleStrategy.FAST_FAILED));
+        defaultPropertiesCheckChain.getFunction(new ChainContext(RuleStrategy.FAIL_FAST));
     }
 
     @Test
     public void testChainContext() {
-        ChainContext chainContext = new ChainContext(RuleStrategy.FAST_FAILED);
-        chainContext.setRuleStrategy(RuleStrategy.FAST_FAILED);
+        ChainContext chainContext = new ChainContext(RuleStrategy.FAIL_FAST);
+        chainContext.setRuleStrategy(RuleStrategy.FAIL_FAST);
     }
 
     @Test

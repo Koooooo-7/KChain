@@ -23,8 +23,9 @@ import java.util.List;
 public class App {
 
     public static void main(String[] args) {
-        demoOnMap();
-        demoOnEntity();
+        demoOnMapWithFullCheck();
+        demoOnMapWithFailFast();
+        demoOnEntityWithFullCheck();
         demoOnMapBuilder();
     }
 
@@ -37,7 +38,7 @@ public class App {
      * test map1 that the name is empty
      * test map1 and map2 that the age is duplicated
      */
-    public static void demoOnMap() {
+    public static void demoOnMapWithFullCheck() {
         // mock maps
         HashMap<String, Object> map = new HashMap<>();
         map.put("name", "");
@@ -66,6 +67,30 @@ public class App {
     }
 
     /**
+     * Demo on map on Fail Fast
+     * map1 [name="", age=24]
+     * <p>
+     * test map1 that the name is empty, it wont test the age next.
+     */
+    public static void demoOnMapWithFailFast() {
+        // mock maps
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", "");
+        map.put("age", 24);
+
+        ChainContext ctx = new ChainContext(RuleStrategy.FULL_CHECK);
+
+        // wrap date to dataWrapper
+        MapRuleContext ruleContext = new MapRuleContext(ctx.getRuleStrategy());
+        MapDataWrapper mapDataWrapper = new MapDataWrapper(map, ruleContext);
+
+        MapPropertiesCheckChain mapPropertiesCheckChain = new MapPropertiesCheckChain();
+        mapPropertiesCheckChain.test(ctx, mapDataWrapper);
+
+        System.out.println(mapDataWrapper.getRuleContext().getResult());
+    }
+
+    /**
      * Demo on entity
      * user1 [name="", age=24]
      * user1 [name="Kobe", age=24]
@@ -73,7 +98,7 @@ public class App {
      * test user1 that the name is empty
      * test user1 and user2 that the age is duplicated
      */
-    public static void demoOnEntity() {
+    public static void demoOnEntityWithFullCheck() {
         User user = new User("", 24);
         User user2 = new User("Kobe", 24);
 
@@ -124,11 +149,14 @@ public class App {
         MapPropertiesCheckChain mapPropertiesCheckChain = new MapPropertiesCheckChain();
 
         Chain<MapDataWrapper, List<MapDataWrapper>> chain = ChainBuilder.newBuilder()
-                .setChainContext(new ChainContext(RuleStrategy.FAST_FAILED))
+                .setChainContext(new ChainContext(RuleStrategy.FULL_CHECK))
                 .setChain(mapPropertiesCheckChain)
                 .build();
 
-        chain.test(mapDataWrapper);
+        for (MapDataWrapper m : mapDataWrappers) {
+            chain.test(m);
+        }
+
         chain.apply(mapDataWrappers);
 
         System.out.println(mapDataWrapper.getRuleContext().getResult().toString());
