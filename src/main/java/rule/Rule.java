@@ -10,7 +10,6 @@ import java.util.function.*;
 public enum Rule {
     NOT_EMPTY,
     IN_CASES,
-    HAS_ONE,
     CUSTOMIZED,
     ;
 
