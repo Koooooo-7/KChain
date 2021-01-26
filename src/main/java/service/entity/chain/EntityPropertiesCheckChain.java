@@ -9,7 +9,6 @@ import rule.TrdFunction;
 import service.common.CommonTestComponents;
 import service.entity.EntityDataWrapper;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -53,10 +52,10 @@ public class EntityPropertiesCheckChain implements IChain<EntityDataWrapper, Lis
                         , dataWrapper -> CommonUtil.isNotEmpty(dataWrapper.getData().getAge())
                         , resultProcessor("age", CheckResultCode.NOT_EMPTY)
                 )).and(Rule.IN_CASES.testInCases("age",
-                        CommonTestComponents.testInCasesRule(dataWrapper -> dataWrapper.getData().getAge(), Arrays.asList(1, 2, 24)),
-                        resultProcessor("age", CheckResultCode.IN_CASES)
+                        CommonTestComponents.testInCasesRule(dataWrapper -> dataWrapper.getData().getAge()
+                                , Arrays.asList(1, 2, 24))
+                        , resultProcessor("age", CheckResultCode.IN_CASES)
                 ));
-
     }
 
     /**
