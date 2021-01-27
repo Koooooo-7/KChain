@@ -1,6 +1,7 @@
 package core;
 
-import java.util.Collections;
+import com.google.common.collect.Lists;
+
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -61,7 +62,7 @@ public class ChainExecutorFactory {
                 return;
             }
 
-            List<T> collection = Collections.synchronizedList(data);
+            CopyOnWriteArrayList<T> collection = Lists.newCopyOnWriteArrayList(data);
             int size = collection.size();
             int batchTimes = CORE_POOL_SIZE;
             int fromIndex = 0;
