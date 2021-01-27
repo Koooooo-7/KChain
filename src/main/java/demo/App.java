@@ -23,10 +23,27 @@ import java.util.List;
 public class App {
 
     public static void main(String[] args) {
-        demoOnMapWithFullCheck();
-        demoOnMapWithFailFast();
-        demoOnEntityWithFullCheck();
-        demoOnMapBuilder();
+        main0();
+    }
+
+    public static void main0() {
+
+        HashMap<String, Object> map = Maps.newHashMapWithExpectedSize(2);
+        map.put("name", "");
+        map.put("age", 24);
+        HashMap<String, Object> map2 = new HashMap<>();
+        map2.put("name", "Kobe");
+        map2.put("age", 24);
+
+        List<HashMap<String, Object>> maps = Lists.newArrayListWithCapacity(2);
+        maps.add(map);
+        maps.add(map2);
+
+//
+//        demoOnMapWithFullCheck();
+//        demoOnMapWithFailFast();
+//        demoOnEntityWithFullCheck();
+        demoOnMapBuilder(maps);
     }
 
 
@@ -131,35 +148,32 @@ public class App {
      * test map1 that the name is empty
      * test map1 and map2 that the age is duplicated
      */
-    public static void demoOnMapBuilder() {
-        HashMap<String, Object> map = Maps.newHashMapWithExpectedSize(2);
-        map.put("name", "");
-        map.put("age", 24);
-        HashMap<String, Object> map2 = new HashMap<>();
-        map2.put("name", "Kobe");
-        map2.put("age", 24);
-
+    public static void demoOnMapBuilder(List<HashMap<String, Object>> maps) {
         // wrap date to dataWrapper
-        MapDataWrapper mapDataWrapper = new MapDataWrapper(map, new MapRuleContext(RuleStrategy.FULL_CHECK));
-        MapDataWrapper mapDataWrapper2 = new MapDataWrapper(map2, new MapRuleContext(RuleStrategy.FULL_CHECK));
         List<MapDataWrapper> mapDataWrappers = Lists.newArrayListWithCapacity(2);
-        mapDataWrappers.add(mapDataWrapper);
-        mapDataWrappers.add(mapDataWrapper2);
+        for (HashMap<String, Object> map : maps) {
+            MapDataWrapper mapDataWrapper = new MapDataWrapper(map, new MapRuleContext(RuleStrategy.FULL_CHECK));
+            mapDataWrappers.add(mapDataWrapper);
+        }
 
-        MapPropertiesCheckChain mapPropertiesCheckChain = new MapPropertiesCheckChain();
-
+        // build the chain with FULL_CHECK strategy
         Chain<MapDataWrapper, List<MapDataWrapper>> chain = ChainBuilder.newBuilder()
                 .setChainContext(new ChainContext(RuleStrategy.FULL_CHECK))
-                .setChain(mapPropertiesCheckChain)
+                .setChain(new MapPropertiesCheckChain())
                 .build();
 
+        // Verify the property in the map
         for (MapDataWrapper m : mapDataWrappers) {
             chain.test(m);
         }
 
+        // Verify the rules between batch properties sets
         chain.apply(mapDataWrappers);
 
-        System.out.println(mapDataWrapper.getRuleContext().getResult().toString());
-        System.out.println(mapDataWrapper2.getRuleContext().getResult().toString());
+        // show the result
+        for (MapDataWrapper mapDataWrapper : mapDataWrappers) {
+            System.out.println(mapDataWrapper.getRuleContext().getResult().toString());
+        }
+
     }
 }
