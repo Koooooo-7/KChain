@@ -23,6 +23,9 @@ import java.util.List;
 public class App {
 
     public static void main(String[] args) {
+        demoOnMapWithFullCheck();
+        demoOnMapWithFailFast();
+        demoOnEntityWithFullCheck();
         main0();
     }
 
@@ -39,10 +42,6 @@ public class App {
         maps.add(map);
         maps.add(map2);
 
-//
-//        demoOnMapWithFullCheck();
-//        demoOnMapWithFailFast();
-//        demoOnEntityWithFullCheck();
         demoOnMapBuilder(maps);
     }
 
@@ -139,14 +138,10 @@ public class App {
         System.out.println(entityDataWrapper2.getRuleContext().getResult());
     }
 
-
     /**
-     * Demo on map with Builder model.
-     * map1 [name="", age=24]
-     * map2 [name="Kobe", age=24]
-     * <p>
-     * test map1 that the name is empty
-     * test map1 and map2 that the age is duplicated
+     * @param maps input properties set
+     *             map1 [name="", age=24]
+     *             map2 [name="Kobe", age=24]
      */
     public static void demoOnMapBuilder(List<HashMap<String, Object>> maps) {
         // wrap date to dataWrapper
