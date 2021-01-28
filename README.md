@@ -262,9 +262,8 @@ Suppose that we need to verify the `name` and `age`  in `map`. The rules are as 
                 .build();
 
         // Verify the property in the map
-        for (MapDataWrapper m : mapDataWrappers) {
-            chain.test(m);
-        }
+        // There use 6 thread to execute it to make it speeder
+        chain.test(mapDataWrappers);
 
         // Verify the rules between batch properties sets
         chain.apply(mapDataWrappers);

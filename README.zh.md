@@ -242,9 +242,8 @@
                 .build();
 
         // 验证对于每个map中的属性的规则
-        for (MapDataWrapper m : mapDataWrappers) {
-            chain.test(m);
-        }
+        // 这里使用了6个线程对数据进行分批，以获得更好的效率
+        chain.test(mapDataWrappers);
 
         // 验证对于批量的maps之间的属性规则
         chain.apply(mapDataWrappers);
