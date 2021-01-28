@@ -222,10 +222,10 @@ Suppose that we need to verify the `name` and `age`  in `map`. The rules are as 
 
 
 
-#### Build the batch properties set chain
+#### Build the batch properties sets chain
 
-- `name`  cannot duplicated in batch of properties set
-- `age`cannot duplicated in batch of properties set
+- `name`  cannot duplicated in batch of properties sets
+- `age`cannot duplicated in batch of properties sets
 
 ```java
     @Override
@@ -248,27 +248,27 @@ Suppose that we need to verify the `name` and `age`  in `map`. The rules are as 
 
 ```java
  public static void demoOnMapBuilder(List<HashMap<String, Object>> maps) {
-        // wrap date to dataWrapper
+        // Wrap data to DataWrapper
         List<MapDataWrapper> mapDataWrappers = Lists.newArrayListWithCapacity(2);
         for (HashMap<String, Object> map : maps) {
             MapDataWrapper mapDataWrapper = new MapDataWrapper(map, new MapRuleContext(RuleStrategy.FULL_CHECK));
             mapDataWrappers.add(mapDataWrapper);
         }
 
-        // build the chain with FULL_CHECK strategy
+        // Build the chain with FULL_CHECK strategy
         Chain<MapDataWrapper, List<MapDataWrapper>> chain = ChainBuilder.newBuilder()
                 .setChainContext(new ChainContext(RuleStrategy.FULL_CHECK))
                 .setChain(new MapPropertiesCheckChain())
                 .build();
 
         // Verify the property in the map
-        // There use 6 thread to execute it to make it speeder
+        // There use 6 threads execute it to make it speeder
         chain.test(mapDataWrappers);
 
         // Verify the rules between batch properties sets
         chain.apply(mapDataWrappers);
 
-        // show the result
+        // Show the result
         for (MapDataWrapper mapDataWrapper : mapDataWrappers) {
             System.out.println(mapDataWrapper.getRuleContext().getResult().toString());
         }
