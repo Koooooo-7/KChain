@@ -49,7 +49,7 @@ public class ChainExecutorFactory {
         <T, G> void exec(IChain<T, G> chain, ChainContext ctx, List<T> data);
     }
 
-    public static class DefaultExecutor implements IExecutor {
+     private static class DefaultExecutor implements IExecutor {
 
         @Override
         public <T, G> void exec(IChain<T, G> chain, ChainContext ctx, List<T> data) {

@@ -158,9 +158,8 @@ public class App {
                 .build();
 
         // Verify the property in the map
-        for (MapDataWrapper m : mapDataWrappers) {
-            chain.test(m);
-        }
+        // For much maps, you can use to make it speeder(default 6 thread to execute it)
+        chain.test(mapDataWrappers);
 
         // Verify the rules between batch properties sets
         chain.apply(mapDataWrappers);
