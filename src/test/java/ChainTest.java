@@ -13,6 +13,7 @@ import service.map.chain.MapPropertiesCheckChain;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -40,8 +41,28 @@ public class ChainTest {
     public void testChainContext() {
         ChainContext chainContext = new ChainContext(RuleStrategy.FAIL_FAST);
         chainContext.setRuleStrategy(RuleStrategy.FAIL_FAST);
+        Assertions.assertEquals(RuleStrategy.FAIL_FAST, chainContext.getRuleStrategy());
     }
 
+    @Test
+    public void testChainContextCache() {
+        ChainContext chainContext = new ChainContext();
+        chainContext.setCache("key", "val");
+        Optional<Object> key = chainContext.getCache("key");
+        Assertions.assertTrue(key.isPresent());
+        Assertions.assertTrue(StringUtils.equals("val", key.get().toString()));
+    }
+
+    @Test
+    public void testIChain(){
+       class TestChain implements IChain<String,String>{}
+        TestChain testChain = new TestChain();
+        ChainContext chainContext = new ChainContext();
+        Function<String, String> testChainFunction = testChain.getFunction(chainContext);
+        Predicate<String> testChainPredicateChain= testChain.getPredicateChain(chainContext);
+        Assertions.assertEquals("Test", testChainFunction.apply("Test"));
+        Assertions.assertTrue(testChainPredicateChain.test("Test"));
+    }
     @Test
     public void testTrdConsumer() {
         TrdConsumer<String, String, String> consumer1 = (s1, s2, s3) -> {
@@ -62,6 +83,41 @@ public class ChainTest {
 
     }
 
+
+    @Test
+    public void testChainBuilderOnTest() {
+
+        int size = 6;
+
+        List<Map<String, Object>> data = Lists.newArrayListWithCapacity(size);
+        for (int i = 0; i < size; i++) {
+            data.add(mapSupplier.get());
+
+        }
+
+        List<MapDataWrapper> mapDataWrappers = Lists.newArrayListWithCapacity(size);
+        for (Map<String, Object> map : data) {
+            MapDataWrapper mapDataWrapper = new MapDataWrapper(map, new MapRuleContext(RuleStrategy.FULL_CHECK));
+            mapDataWrappers.add(mapDataWrapper);
+        }
+
+        Chain<MapDataWrapper, List<MapDataWrapper>> chain = ChainBuilder.newBuilder()
+                .setChainContext(new ChainContext(RuleStrategy.FULL_CHECK))
+                .setChain(new MapPropertiesCheckChain())
+                .build();
+
+        for (MapDataWrapper m : mapDataWrappers) {
+            chain.test(m);
+        }
+
+        Assertions.assertTrue(mapDataWrappers
+                .parallelStream()
+                .allMatch(mapDataWrapper -> mapDataWrapper
+                        .getRuleContext()
+                        .getResult()
+                        .get("name")
+                        .isEmpty()));
+    }
 
     @Test
     public void testExecutorOnSize96() {
