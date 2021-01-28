@@ -49,7 +49,7 @@ public class ChainExecutorFactory {
         <T, G> void exec(IChain<T, G> chain, ChainContext ctx, List<T> data);
     }
 
-     private static class DefaultExecutor implements IExecutor {
+    private static class DefaultExecutor implements IExecutor {
 
         @Override
         public <T, G> void exec(IChain<T, G> chain, ChainContext ctx, List<T> data) {
@@ -91,8 +91,6 @@ public class ChainExecutorFactory {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-
         }
 
 
@@ -108,7 +106,6 @@ public class ChainExecutorFactory {
 
 
         /**
-         *
          * To find a sub size which it more close and bigger than size to make the sub list more `average` in 6 thread.
          * f.e
          * size = 1000
@@ -117,12 +114,13 @@ public class ChainExecutorFactory {
          * if we use the 166+4 = 170 as the sub size it is okay , cuz 170*6 > 1000
          * so, how about make the `plus` smaller ?
          * so, try to calculate the base+plus/2 to get the smaller sub size.
-         * 166 + 4/2 = 168 and 168*6 > 1000, so, chose 168 as the number.
+         * 166 + 4/2 = 168 and 168*6 > 1000, so, chose 168 as the sub size.
+         * and when the size>100, it gets the better performance.
+         *
          * @param size data size
          * @param base the base subSize on size/6
          * @param plus the size need add to size/6
          * @return sub size
-         *
          */
         private static int getClosestBiggerThanSize(int size, int base, int plus) {
             if ((base + plus) * CORE_POOL_SIZE < size || plus == 1) {

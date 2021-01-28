@@ -22,6 +22,7 @@ public class KChain<T, G> implements Chain<T, G> {
     @Override
     public void test(T data) {
         chain.test(this.chainContext, data);
+        this.chainContext.removeCache();
     }
 
     public void test(List<T> data) {
@@ -31,10 +32,12 @@ public class KChain<T, G> implements Chain<T, G> {
     @Override
     public void test(List<T> data, ChainExecutorFactory.IExecutor executor) {
         executor.exec(this.chain, chainContext, data);
+        this.chainContext.removeCache();
     }
 
     @Override
     public void apply(G data) {
         chain.apply(this.chainContext, data);
+        this.chainContext.removeCache();
     }
 }
