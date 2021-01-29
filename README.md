@@ -53,7 +53,7 @@ The following two dimensions are usually considered:
 
 - For batch of `perperties set` , such as `List<User>`
 
-​       It is necessary to check whether they meet certain rules with each other.
+​      It is necessary to check whether they meet certain rules with each other.
 
 ​      For example, such as *the same name of `User`* can not exist in the batch of `User` set.
 
@@ -67,7 +67,7 @@ The following two dimensions are usually considered:
 
 - Full check  
 
-   Running all the verification rules, verify all the rule items for its perperties.
+  Running all the verification rules, verify all the rule items for its perperties.
 
   
 
@@ -87,27 +87,27 @@ There are some components which play an important role in `KChain`.
 
 - `DataWrapper`
 
-  Wrapping the `properties set` and the `Rulecontext` together.
+   Wrapping the `properties set` and the `Rulecontext` together.
 
   
 
 - `RuleContext`
 
-  It is used to store the check result and the return flag bit of `Predicate` based on different check strategies.
+   It is used to store the check result and the return flag bit of `Predicate` based on different check strategies.
 
   
 
 - `Rule`
 
-  It contains some rules for checking.
+   It contains some rules for checking.
 
-  There are three built-in rules for now:
+   There are three built-in rules for now:
 
-  - `testNotEmpty`，whether the perperty value is empty based on the rule.
+   - `testNotEmpty`，whether the perperty value is empty based on the rule.
 
-  - `testInCases`，whether the perperty value is in the given collection (` contains`).
+   - `testInCases`，whether the perperty value is in the given collection (` contains`).
 
-  - `testOnCustomized`，the fully customized implementation  rule extension.
+   - `testOnCustomized`，the fully customized implementation  rule extension.
 
     
 
@@ -119,7 +119,7 @@ There are some components which play an important role in `KChain`.
 
   - `FAIL_FAST ` 
 
-    It is usually used to check a single `perperties set` to quickly know whether the `perperties set` is valid.
+     It is usually used to check a single `perperties set` to quickly know whether the `perperties set` is valid.
   
     
   
@@ -131,7 +131,7 @@ There are some components which play an important role in `KChain`.
 
     `test()`
 
-  ​       Mainly for the verification of a single `properties set`, the verification rule of each property in the `perperties set` can be configured.
+  ​ Mainly for the verification of a single `properties set`, the verification rule of each property in the `perperties set` can be configured.
   
 
   - `Function`
@@ -140,14 +140,13 @@ There are some components which play an important role in `KChain`.
     
     Mainly for the verification of batch of `properties set`, the verification rule of  the property between each ` perperties set` can be configured.
     
-    Build in the `duplicate rule ` .
+    Build in the `duplicate rule `.
     
     
 
 
-- `ChainBuiler`
-
-​       Build the chain to use, build in.
+- `ChainBuiler`  
+​  Build the chain to use, build in.
 
 ---
 
@@ -161,7 +160,9 @@ There are some components which play an important role in `KChain`.
 
 Requests  **JDK8+**, the core is using the `@FunctionalInterface`.
 
-- Maven
+**Import**
+- Maven  
+  It has been published in `Github Packages`, you can import it directly, more details see the [packages](https://github.com/Koooooo-7?tab=packages&repo_name=KChain).
 
 ```xml
 <dependency>

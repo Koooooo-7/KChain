@@ -147,7 +147,9 @@
 
 **其核心使用的是`JDK8`的函数式接口，所以要求`JDK8+`**。
 
-- Maven
+**引入依赖**
+- Maven  
+  已经发布在了`Github Packages` 里可直接引入，详细信息见[packages](https://github.com/Koooooo-7?tab=packages&repo_name=KChain)。
 
 ```xml
 <dependency>
