@@ -79,8 +79,8 @@ There are some components which play an important role in `KChain`.
 
 - `ChainContext`
 
-  The context for the `chain` which can hold the informations you wanna use in the whole chain life circle.
-
+  The context for the `chain` which can hold the information you wanna use in the whole chain life circle.
+  Build in the `cache` and `inheritable cache` expired in the current chain test life circle.
   Such as some global parameters or special symbol.
 
   
