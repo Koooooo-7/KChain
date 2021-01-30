@@ -47,6 +47,9 @@ public class ChainTest {
     @Test
     public void testChainContextCache() {
         ChainContext chainContext = new ChainContext();
+        Optional<Object> empty = chainContext.getCache("empty");
+        Assertions.assertFalse(empty.isPresent());
+
         chainContext.setCache("key", "val");
         Optional<Object> key = chainContext.getCache("key");
         Assertions.assertTrue(key.isPresent());
@@ -54,15 +57,36 @@ public class ChainTest {
     }
 
     @Test
-    public void testIChain(){
-       class TestChain implements IChain<String,String>{}
+    public void testChainContextInheritableCache() {
+        ChainContext chainContext = new ChainContext();
+        Optional<Object> empty = chainContext.getInheritableCache("empty");
+        Assertions.assertFalse(empty.isPresent());
+
+        chainContext.setInheritableCache("key", "val");
+        new Thread(() -> {
+            Optional<Object> key = chainContext.getInheritableCache("key");
+            Assertions.assertTrue(key.isPresent());
+            Assertions.assertTrue(StringUtils.equals("val", key.get().toString()));
+        }).start();
+        new Thread(() -> {
+            Optional<Object> key = chainContext.getInheritableCache("key");
+            Assertions.assertTrue(key.isPresent());
+            Assertions.assertTrue(StringUtils.equals("val", key.get().toString()));
+        }).start();
+    }
+
+    @Test
+    public void testIChain() {
+        class TestChain implements IChain<String, String> {
+        }
         TestChain testChain = new TestChain();
         ChainContext chainContext = new ChainContext();
         Function<String, String> testChainFunction = testChain.getFunction(chainContext);
-        Predicate<String> testChainPredicateChain= testChain.getPredicateChain(chainContext);
+        Predicate<String> testChainPredicateChain = testChain.getPredicateChain(chainContext);
         Assertions.assertEquals("Test", testChainFunction.apply("Test"));
         Assertions.assertTrue(testChainPredicateChain.test("Test"));
     }
+
     @Test
     public void testTrdConsumer() {
         TrdConsumer<String, String, String> consumer1 = (s1, s2, s3) -> {
