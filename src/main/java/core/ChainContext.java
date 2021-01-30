@@ -103,6 +103,7 @@ public class ChainContext {
 
     void removeCache() {
         cache.remove();
+        inheritableCache.remove();
     }
 
     public interface ICache<V> {
