@@ -13,6 +13,5 @@ notifications:
   email:
     recipients:
       - koy@ko8e24.top
-    on_success: always # default: change
     on_failure: always # default: always
 
