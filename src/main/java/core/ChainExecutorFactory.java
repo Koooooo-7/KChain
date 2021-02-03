@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.LockSupport;
 
 /**
  * @author Koy  https://github.com/Koooooo-7
@@ -36,16 +37,16 @@ public class ChainExecutorFactory {
             , TimeUnit.MILLISECONDS
             , new LinkedBlockingQueue<>(2000)
             , new ThreadFactory() {
-        public final AtomicInteger no = new AtomicInteger(0);
+        private final AtomicInteger threadNumber = new AtomicInteger(1);
 
         @Override
         public Thread newThread(Runnable r) {
-            return new Thread(r, "DEFAULT-K-CHAIN-EXECUTOR-" + no);
+            return new Thread(r, "DEFAULT-K-CHAIN-EXECUTOR-" + threadNumber.getAndIncrement());
         }
-    });
+    }, new ChainWaitRejectedExecutionHandler());
 
 
-    interface IExecutor {
+    public interface IExecutor {
         <T, G> void exec(IChain<T, G> chain, ChainContext ctx, List<T> data);
     }
 
@@ -106,7 +107,7 @@ public class ChainExecutorFactory {
 
 
         /**
-         * To find a sub size which it more close and bigger than size to make the sub list more `average` in 6 thread.
+         * To find a sub size which it more closer and bigger than size to make the sub list more `average` in 6 thread.
          * f.e
          * size = 1000
          * size / 6 = 166 (called it base)
@@ -130,5 +131,27 @@ public class ChainExecutorFactory {
             return getClosestBiggerThanSize(size, base, plus / 2);
         }
 
+    }
+
+    private static class ChainWaitRejectedExecutionHandler implements RejectedExecutionHandler {
+
+        @Override
+        public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+
+            final AtomicInteger count = new AtomicInteger(1);
+            while (!executor.isShutdown()) {
+                LockSupport.parkNanos(count.intValue() * 100000);
+                if (executor.getQueue().remainingCapacity() > 10) {
+                    executor.execute(r);
+                    break;
+                }
+                if (count.incrementAndGet() > 100) {
+                    throw new RejectedExecutionException("Task " + r.toString() +
+                            " rejected more than 100 times from " +
+                            executor.toString());
+                }
+
+            }
+        }
     }
 }
