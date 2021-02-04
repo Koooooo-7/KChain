@@ -2,8 +2,8 @@ package service.map.chain;
 
 import common.CheckResultCode;
 import common.CommonUtil;
-import core.ChainContext;
-import core.IChain;
+import core.chain.ChainContext;
+import core.chain.IChain;
 import rule.Rule;
 import rule.TrdFunction;
 import service.common.CommonTestComponents;

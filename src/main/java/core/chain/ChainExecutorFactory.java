@@ -1,4 +1,4 @@
-package core;
+package core.chain;
 
 import com.google.common.collect.Lists;
 

@@ -2,7 +2,9 @@ package demo;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import core.*;
+import core.chain.Chain;
+import core.chain.ChainBuilder;
+import core.chain.ChainContext;
 import rule.RuleStrategy;
 import service.entity.EntityDataWrapper;
 import service.entity.EntityRuleContext;

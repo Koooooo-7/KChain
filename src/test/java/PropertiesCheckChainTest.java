@@ -1,12 +1,11 @@
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import common.CheckResultCode;
-import core.ChainContext;
+import core.chain.ChainContext;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import rule.Rule;
 import rule.RuleStrategy;
 import service.entity.EntityDataWrapper;
 import service.entity.EntityRuleContext;

@@ -2,7 +2,7 @@ package service.common;
 
 import common.CheckResultCode;
 import common.CommonUtil;
-import core.ChainContext;
+import core.chain.ChainContext;
 import core.DataWrapper;
 import rule.TrdConsumer;
 

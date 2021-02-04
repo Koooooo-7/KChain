@@ -1,4 +1,4 @@
-package core;
+package core.chain;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
