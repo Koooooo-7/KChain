@@ -2,7 +2,7 @@ package rule;
 
 /**
  * @author Koy  https://github.com/Koooooo-7
- * @Description
+ * @Description strategy of check rule.
  */
 
 public enum RuleStrategy {

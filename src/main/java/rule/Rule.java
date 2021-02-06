@@ -4,7 +4,7 @@ import java.util.function.*;
 
 /**
  * @author Koy  https://github.com/Koooooo-7
- * @Description
+ * @Description the rule to check properties.
  */
 
 public enum Rule {

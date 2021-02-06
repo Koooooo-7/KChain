@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 
 /**
  * @author Koy  https://github.com/Koooooo-7
- * @Description
+ * @Description the chain context to hold something you need during the check.
  */
 
 public class ChainContext {
