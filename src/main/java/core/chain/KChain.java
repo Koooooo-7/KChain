@@ -37,7 +37,11 @@ public class KChain<T, G> implements Chain<T, G> {
 
     @Override
     public void apply(G data) {
-        chain.apply(this.chainContext, data);
+        try {
+            chain.apply(this.chainContext, data);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.chainContext.removeCache();
     }
 }
