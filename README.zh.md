@@ -155,7 +155,7 @@
 <dependency>
    <groupId>com.koy</groupId>
    <artifactId>kchain</artifactId>
-   <version>1.0.0</version>
+   <version>${latest.version}</version>
 </dependency>
 ```
 

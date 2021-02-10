@@ -168,7 +168,7 @@ Requests  **JDK8+**, the core is using the `@FunctionalInterface`.
 <dependency>
    <groupId>com.koy</groupId>
    <artifactId>kchain</artifactId>
-   <version>1.0.0</version>
+   <version>${latest.version}</version>
 </dependency>
 ```
 
