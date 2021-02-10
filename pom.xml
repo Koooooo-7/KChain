@@ -6,7 +6,7 @@
 
     <groupId>com.koy</groupId>
     <artifactId>kchain</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>A flexible and configurable chain.</description>
     <properties>
         <mockito.version>1.10.19</mockito.version>
