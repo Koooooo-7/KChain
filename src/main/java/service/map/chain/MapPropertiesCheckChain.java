@@ -28,6 +28,7 @@ public class MapPropertiesCheckChain implements IChain<MapDataWrapper, List<MapD
     }
 
 
+    // TODO: refine duplicated
     private static TrdFunction<String, MapDataWrapper, Boolean, Boolean> resultProcessor(String property, CheckResultCode code) {
         return (s, dw, ruleCheckResult) -> {
             if (ruleCheckResult) {
