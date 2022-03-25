@@ -21,7 +21,7 @@
 
 **English | [中文](README.zh.md)**
 
-> *`KChain`, a flexible and configurable chain.*	
+> :nut_and_bolt: *`KChain`, a flexible and configurable chain.*	
 
 ---
 
